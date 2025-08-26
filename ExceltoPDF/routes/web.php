@@ -1,7 +1,13 @@
 <?php
 
+use App\Http\Controllers\ExcelImportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/excel/upload', function(){
+    return view('UploadExcel');
+});
+Route::post('file/import', [ExcelImportController::class, 'import'])->name('excel.import');
