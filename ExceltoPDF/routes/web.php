@@ -10,4 +10,5 @@ Route::get('/', function () {
 Route::get('/excel/upload', function(){
     return view('UploadExcel');
 });
+
 Route::post('file/import', [ExcelImportController::class, 'import'])->name('excel.import');

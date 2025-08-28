@@ -12,10 +12,12 @@ class ExcelImport implements ToCollection, WithHeadingRow
     /**
     * @param Collection $collection
     */
+    public $rows;
     public function collection(Collection $collections)
     {
+        $this->rows = $collections;
         foreach($collections as $collection){
-            Log::info('row'.$collection);
+            Log::info('Row data:', $collection->toArray());
         }
     }
 }

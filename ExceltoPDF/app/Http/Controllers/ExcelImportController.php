@@ -36,5 +36,10 @@ class ExcelImportController extends Controller
 
         $import = new ExcelImports();
         Excel::import($import, $request->file('import_file'), null, $readerType);
+        if ($import->rows) {
+            Log::info('All rows:', $import->rows->toArray());
+        }
+        $rows =  $import->rows ? $import->rows->toArray() : [];
+        return view('ImportFileDetails', compact('rows'));
     }
 }
