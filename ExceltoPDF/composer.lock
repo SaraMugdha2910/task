@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< Updated upstream
     "content-hash": "b67363ce35cf75be6816d30f799c625e",
+=======
+    "content-hash": "6be31445d088ea09ec374fac887bfd93",
+>>>>>>> Stashed changes
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -2790,6 +2794,7 @@
             "time": "2025-07-25T09:04:22+00:00"
         },
         {
+<<<<<<< Updated upstream
             "name": "mikehaertl/php-pdftk",
             "version": "0.13.1",
             "source": {
@@ -2929,6 +2934,8 @@
             "time": "2024-10-14T16:12:48+00:00"
         },
         {
+=======
+>>>>>>> Stashed changes
             "name": "monolog/monolog",
             "version": "3.9.0",
             "source": {

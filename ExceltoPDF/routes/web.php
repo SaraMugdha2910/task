@@ -10,5 +10,13 @@ Route::get('/', function () {
 Route::get('/excel/upload', function(){
     return view('UploadExcel');
 });
+<<<<<<< Updated upstream
 
 Route::post('file/import', [ExcelImportController::class, 'import'])->name('excel.import');
+=======
+Route::post('file/import', [ExcelImportController::class, 'import'])->name('excel.import');
+
+Route::get('/pdf/download',
+    [ExcelImportController::class,'PdfDownload']
+);
+>>>>>>> Stashed changes
