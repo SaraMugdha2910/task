@@ -23,7 +23,12 @@
                 <td class="px-4 py-2 border-b border-gray-200 text-center">
                     <form action="{{ route('download.pdf') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="{{ $heading }}" value="{{ $item }}">
+                        @foreach($row_content as $heading=>$item)
+                            <input type="hidden" name="{{ $heading }}" value="{{ $item }}">
+                        @endforeach
+                        @foreach($rows[0]['header'][0] as $heading=>$item)
+                            <input type="hidden" name="{{ $heading }}" value="{{ $item }}">
+                        @endforeach
                         <button
                             type="submit"
                             class="px-4 py-1 text-white bg-blue-600 rounded-md

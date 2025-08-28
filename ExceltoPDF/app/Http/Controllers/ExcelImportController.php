@@ -55,6 +55,7 @@ class ExcelImportController extends Controller
     }
     public function download(Request $request)
     {
+        dd($request);
         $row = $request->input('row');
         log::info('uahsudhwa');
         log::info($row);
