@@ -1,24 +1,20 @@
 <table>
-    <tr>
-        @foreach($rows[0]['data'] as $row)
+    @foreach($rows[0]['data'] as $row)
+        @foreach($row as $row_content)
+        @if($loop->first)
+            @foreach($row_content as $heading=>$item)
+                <th>
+                    {{ucfirst(str_replace('_', ' ',$heading))}}
+                </th>
+            @endforeach
+        @endif
             <tr>
-                @foreach ($row[0] as $content)
+                @foreach($row_content as $heading=>$item)
                     <td>
-                        {{$content}}
+                        {{$item}}
                     </td>
                 @endforeach
-                <td>
-                    @if (!$loop->first) 
-                         <form action="{{ route('download.pdf') }}" method="POST">
-                        @csrf
-                        @foreach($row as $key => $value)
-                            <input type="hidden" name="row[{{ $key }}]" value="{{ $value }}">
-                        @endforeach
-                        <button type="submit">Download PDF</button>
-                    </form>
-                    @endif
-                </td>
             </tr>
         @endforeach
-    </tr>
+    @endforeach
 </table>
