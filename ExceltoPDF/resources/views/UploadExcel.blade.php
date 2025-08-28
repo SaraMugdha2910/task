@@ -7,7 +7,7 @@
     <div class="w-[90%]  bg-white shadow-lg rounded-md p-8">
       <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Upload Excel File</h2>
 
-      <!-- Upload Form -->
+      
       <form id="excel-upload-form" enctype="multipart/form-data" class="space-y-6">
         @csrf
         <div class="flex justify-center">
@@ -29,7 +29,6 @@
         </div>
       </form>
 
-      <!-- Preview Section -->
       <div id="preview-table" class="mt-8"></div>
     </div>
 

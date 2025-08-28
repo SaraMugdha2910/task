@@ -23,7 +23,6 @@
                 <td class="px-4 py-2 border-b border-gray-200 text-center">
                     <form action="{{ route('download.pdf') }}" method="POST">
                         @csrf
-                        {{-- Merge row content + header values --}}
                        
                             <input type="hidden" name="payload"
        value='{{ json_encode(array_merge($row_content, $rows[0]['header'][0])) }}'>
