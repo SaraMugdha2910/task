@@ -125,7 +125,7 @@
             return $c === ' ' || $c === '' ? '&nbsp;' : e($c);
         };
         // Normalize tax month end to numeric DDMMYYYY (always DD=05)
-        $taxInput = $tax_month_end ?? '';
+        $taxInput = $period_end ?? '';
         $day = '05';
         $month = '';
         $year = '';
@@ -147,23 +147,25 @@
  
         // Build amount rows from provided collection or defaults
         $amountRows = $amount_rows ?? [
-            ['label' => 'Gross amount paid (Excl VAT) (A)', 'value' => ($gross_amount ?? 0)],
-            ['label' => 'Less cost of materials', 'value' => ($material_cost ?? 0)],
+            ['label' => 'Gross amount paid (Excl VAT) (A)', 'value' => ($total_payments ?? 0)],
+            ['label' => 'Less cost of materials', 'value' => ($cost_of_materials ?? 0)],
             ['label' => 'Amount liable to deduction', 'value' => ($liable_amount ?? 0)],
-            ['label' => 'Amount deducted (B)', 'value' => ($deducted_amount ?? 0)],
-            ['label' => 'Amount payable (A - B)', 'value' => ($payable_amount ?? 0), 'strong' => true],
+            ['label' => 'Amount deducted (B)', 'value' => ($total_deducted ?? 0)],
+            ['label' => 'Amount payable (A - B)', 'value' => ($total_payments-$total_deducted ?? 0), 'strong' => true],
         ];
 
 
-    $ver = $verification_no ?? '';
+    $ver = $verification_number ?? '';
     $ver = ltrim($ver, 'V');
     [$verification_no_left, $verification_no_right] = array_pad(explode('/', $ver, 2), 2, '');
 
 
 
+$empRef = $aoref ?? ''; 
 
-    $empRef = $employer_tax_ref ?? '';
-    [$emp_ref_left, $emp_ref_right] = array_pad(explode('/', $empRef, 2), 2, '');
+$emp_ref_left = substr($empRef, 0, 3); // First 3 characters
+$emp_ref_right = substr($empRef, 3);   // The rest of the string
+
 
 
 
@@ -177,7 +179,7 @@
                     <span class="label">Contractor’s name</span>
                     <div class="track-left"><div class="line-input">
                    
-    {{ $contractor_name }}
+    {{ $forename }}
  
  
                     </div></div>
@@ -187,7 +189,7 @@
                     <div class="track-left"><div class="line-input multiline">
                        
 <div class="address-input">
-    {{ $contractor_address }}
+    {{ $address??' uahsuiha' }}
 </div>
                     </div></div>
                 </div>
@@ -212,7 +214,7 @@
                                 <span class="box">{!! $chr($c) !!}</span>
                             @endforeach
                             <span class="box-slash">/</span>
-                            @foreach($pad(($emp_ref_right ?? ''), 5) as $c)
+                            @foreach($pad(($emp_ref_right ?? ''), 8) as $c)
                                 <span class="box">{!! $chr($c) !!}</span>
                             @endforeach
                         </div>
@@ -228,7 +230,7 @@
             <div class="col col-left">
                 <div class="field">
                     <span class="label">Subcontractor’s full name</span>
-                    <div class="track-left"><div class="line-input">{{ $subcontractor_name }}</div></div>
+                    <div class="track-left"><div class="line-input">{{ $forename }}</div></div>
                 </div>
                 <div class="field">
                     <span class="label">Unique Taxpayer reference (UTR)</span>

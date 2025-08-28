@@ -55,18 +55,28 @@ class ExcelImportController extends Controller
     }
     public function download(Request $request)
     {
-        dd($request);
-        $row = $request->input('row');
-        log::info('uahsudhwa');
-        log::info($row);
-        $row = $this->normalizeRowKeys($row);
+        // dd($request);
+        // $row = json_decode($request->input('payload',true));
+        // log::info($row);
+        // $pdf = PDF::loadView('CISStatement', $row);
 
+        // return $pdf->download('CISStatement_' . $row['contractor_name'] . '.pdf');
+        $payload= $request->input('payload') ;
+$row=json_decode($payload,true);
 
-        $pdf = PDF::loadView('CISStatement', $row);
+        if (!$row) {
+            Log::error('PDF payload is null or invalid', ['payload' => $request->input('payload')]);
+            abort(400, 'Invalid PDF data.');
+        }
 
+        Log::info('Generating PDF', $row);
 
+        $pdf = PDF::loadView('CISStatement',  $row);
 
-        return $pdf->download('CISStatement_' . $row['contractor_name'] . '.pdf');
+        // Use contractor_name if exists
+        $filename = 'CISStatement_' . ($row['contractor_name'] ?? 'Unknown') . '.pdf';
+
+        return $pdf->download($filename);
     }
 
 

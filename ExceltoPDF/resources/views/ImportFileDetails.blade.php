@@ -3,9 +3,9 @@
         @foreach($row as $row_content)
             @if($loop->first)
                 <tr class="bg-gray-100 text-gray-700">
-                    @foreach($row_content as $heading=>$item)
+                    @foreach($row_content as $heading => $item)
                         <th class="px-4 py-3 border-b border-gray-300 text-left font-semibold">
-                            {{ucfirst(str_replace('_', ' ',$heading))}}
+                            {{ucfirst(str_replace('_', ' ', $heading))}}
                         </th>
                     @endforeach
                     <th class="px-4 py-3 border-b border-gray-300 text-center font-semibold">
@@ -15,7 +15,7 @@
             @endif
 
             <tr class="hover:bg-gray-50 transition">
-                @foreach($row_content as $heading=>$item)
+                @foreach($row_content as $heading => $item)
                     <td class="px-4 py-2 border-b border-gray-200">
                         {{$item}}
                     </td>
@@ -23,22 +23,19 @@
                 <td class="px-4 py-2 border-b border-gray-200 text-center">
                     <form action="{{ route('download.pdf') }}" method="POST">
                         @csrf
-                        @foreach($row_content as $heading=>$item)
-                            <input type="hidden" name="{{ $heading }}" value="{{ $item }}">
-                        @endforeach
-                        @foreach($rows[0]['header'][0] as $heading=>$item)
-                            <input type="hidden" name="{{ $heading }}" value="{{ $item }}">
-                        @endforeach
-                        <button
-                            type="submit"
-                            class="px-4 py-1 text-white bg-blue-600 rounded-md
-                                   hover:bg-blue-700 shadow-sm transition-all duration-200
-                                   cursor-pointer hover:scale-105"
-                        >
+                        {{-- Merge row content + header values --}}
+                       
+                            <input type="hidden" name="payload"
+       value='{{ json_encode(array_merge($row_content, $rows[0]['header'][0])) }}'>
+
+                        <button type="submit" class="px-4 py-1 text-white bg-blue-600 rounded-md
+                           hover:bg-blue-700 shadow-sm transition-all duration-200
+                           cursor-pointer hover:scale-105">
                             Download PDF
                         </button>
                     </form>
                 </td>
+
             </tr>
         @endforeach
     @endforeach
