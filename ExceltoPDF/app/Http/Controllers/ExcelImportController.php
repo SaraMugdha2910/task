@@ -26,8 +26,10 @@ class ExcelImportController extends Controller
             'data' => $dataRows,
             'header' => array_slice($headerRows[0], 0, 1)
         ];
-        // dd($rows);
-        return view('importfiledetails', compact('rows'));
+        log::info(json_encode($rows));
+        $html = view('ImportFileDetails', ['rows' => $rows])->render();
+
+        return response()->json(['html' => $html]);
     }
 
 
@@ -58,9 +60,9 @@ class ExcelImportController extends Controller
         log::info($row);
         $row = $this->normalizeRowKeys($row);
 
-    
-            $pdf = PDF::loadView('CISStatement', $row);
-   
+
+        $pdf = PDF::loadView('CISStatement', $row);
+
 
 
         return $pdf->download('CISStatement_' . $row['contractor_name'] . '.pdf');
