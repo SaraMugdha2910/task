@@ -16,3 +16,5 @@ Route::post('file/import', [ExcelImportController::class, 'import'])->name('exce
 Route::get('/pdf/download',
     [ExcelImportController::class,'PdfDownload']
 );
+Route::post('/download-pdf', [ExcelImportController::class, 'download'])->name('download.pdf');
+

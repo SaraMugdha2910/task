@@ -161,6 +161,7 @@
 
 
 
+
     $empRef = $employer_tax_ref ?? '';
     [$emp_ref_left, $emp_ref_right] = array_pad(explode('/', $empRef, 2), 2, '');
 
@@ -211,7 +212,7 @@
                                 <span class="box">{!! $chr($c) !!}</span>
                             @endforeach
                             <span class="box-slash">/</span>
-                            @foreach($pad(($emp_ref_right ?? ''), 8) as $c)
+                            @foreach($pad(($emp_ref_right ?? ''), 5) as $c)
                                 <span class="box">{!! $chr($c) !!}</span>
                             @endforeach
                         </div>
