@@ -1,8 +1,8 @@
 <table>
     <tr>
-        @foreach($rows as $row)
+        @foreach($rows[0]['data'] as $row)
             <tr>
-                @foreach ($row as $content)
+                @foreach ($row[0] as $content)
                     <td>
                         {{$content}}
                     </td>

@@ -2,46 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ExcelImport;
+use App\Imports\HeaderRows;
 use Illuminate\Http\Request;
 use App\Imports\ExcelImport as ExcelImports;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Excel as Excels;
 use Barryvdh\DomPDF\facade\Pdf as PDF;
+
 class ExcelImportController extends Controller
 {
     public function import(Request $request)
     {
-
         $request->validate([
             'import_file' => 'required|mimes:csv,xlsx,xls',
         ]);
-        // dd($request);
         $file = $request->file('import_file');
 
-        Log::info('Uploaded file:', [
-            'originalName' => $file->getClientOriginalName(),
-            'extension' => $file->getClientOriginalExtension(),
-            'mimeType' => $file->getMimeType(),
-            'size' => $file->getSize()
-        ]);
-
-        $extension = $request->file('import_file')->getClientOriginalExtension();
-        $readerType = match (strtolower($extension)) {
-            'csv' => Excels::CSV,
-            'xls' => Excels::XLS,
-            'xlsx' => Excels::XLSX,
-            default => Excels::CSV,
-        };
-
-
-        $import = new ExcelImports();
-        Excel::import($import, $request->file('import_file'), null, $readerType);
-        if ($import->rows) {
-            Log::info('All rows:', $import->rows->toArray());
-        }
-        $rows = $import->rows ? $import->rows->toArray() : [];
-        return view('ImportFileDetails', compact('rows'));
+        $dataRows = Excel::toArray(new ExcelImport, $file);
+        $headerRows = Excel::toArray(new HeaderRows, $file);
+        $rows[] = [
+            'data' => $dataRows,
+            'header' => array_slice($headerRows[0], 0, 1)
+        ];
+        // dd($rows);
+        return view('importfiledetails', compact('rows'));
     }
 
 

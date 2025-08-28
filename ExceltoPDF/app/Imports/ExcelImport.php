@@ -4,20 +4,20 @@ namespace App\Imports;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ExcelImport implements ToCollection, WithHeadingRow
+class ExcelImport implements ToArray, WithHeadingRow
 {
     /**
     * @param Collection $collection
     */
-    public $rows;
-    public function collection(Collection $collections)
+    public function headingRow(){
+        return 4;
+    }
+    public function array(array $rows)
     {
-        $this->rows = $collections;
-        foreach($collections as $collection){
-            Log::info('Row data:', $collection->toArray());
-        }
+        return $rows;
     }
 }
