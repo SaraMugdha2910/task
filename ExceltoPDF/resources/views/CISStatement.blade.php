@@ -7,7 +7,7 @@
     <style>
         @page {
             size: A4;
-            margin: 28mm 18mm 20mm 18mm;
+            margin: 10mm 15mm 10mm 15mm;
         }
 
         html,
@@ -23,32 +23,31 @@
             line-height: 1.25;
         }
 
-        .sheet {
-            width: 174mm;
+        .mb {
+            margin-bottom: 25px
         }
 
         .teal {
-            color: #157c96;
+            color: #009290;
         }
 
         .header-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
-            line-height: 1.35;
-            color: #157c96;
-            margin: 0 0 2mm 0;
+            color: #009290;
         }
 
         .rule {
-            height: 6px;
-            background: #157c96;
-            margin: 3mm 0 5mm 0;
+            height: 10px;
+            background: #009290;
+            margin: 3mm 0 7mm 0;
+            margin-bottom: 7mm;
         }
 
         .panel {
             border: 1px solid #92c8cf;
-            padding: 5mm 5mm 4mm 5mm;
-            margin-bottom: 6mm;
+            padding: 5mm 5mm 4mm 8mm;
+            margin-bottom: 10mm;
             page-break-inside: avoid;
         }
 
@@ -56,7 +55,6 @@
             font-weight: 700;
             color: #157c96;
             font-size: 14px;
-            margin: 0 0 3mm 0;
         }
 
         .grid {
@@ -71,40 +69,42 @@
         }
 
         .col-left {
-            width: 58%;
+            width: 55%;
             padding-right: 4mm;
         }
 
         .col-right {
-            width: 42%;
+            width: 45%;
             padding-left: 4mm;
         }
 
         .field {
             margin: 2.5mm 0;
+            margin-bottom: 15mm;
         }
 
         .label {
             display: block;
-            color: #157c96;
-            font-weight: 700;
+            color: black;
+            font-weight: 900;
+            font-size: 10px;
             margin: 0 0 1mm 0;
         }
 
         .hint {
-            color: #6da6ad;
+            /* color: #6da6ad; */
             font-size: 10px;
             margin-bottom: 1mm;
         }
 
         .track-left {
             display: inline-block;
-            width: 95mm;
+            width: 73mm;
         }
 
         .line-input {
-            border: 1px solid #92c8cf;
-            height: 8mm;
+            border: 1px solid #a8d7d7;
+            height: 5mm;
         }
 
         .line-input.multiline {
@@ -120,7 +120,7 @@
             display: inline-block;
             width: 4mm;
             height: 5mm;
-            border: 1px solid #92c8cf;
+            border: 1px solid #a8d7d7;
             text-align: center;
             vertical-align: middle;
             line-height: 5mm;
@@ -139,37 +139,30 @@
         }
 
         .box--currency {
-            background: #157c96;
-            color: #fff;
-            border-color: #92c8cf;
-            font-weight: 700;
-            font-size: 9px;
-        }
-
-
-        .box--currency {
             background: #fff;
-            color: #157c96;
-            border-color: #157c96;
+            color: #a8d7d7;
+            border-color: 1px solid #a8d7d7;
             font-weight: 700;
         }
 
         .box-slash {
-            color: #92c8cf;
+            color: #a8d7d7;
             font-weight: 700;
             margin: 0 1mm;
-            font-size: 18px;
+            font-size: 20px;
             justify-self: center;
+            align-items: center;
         }
 
         .amount-row {
             margin: 3mm 0;
+            margin-bottom: 25px;
         }
 
         .amount-label {
             display: block;
             width: 100%;
-            margin-bottom: 1.5mm;
+            margin-bottom: 2.5mm;
         }
 
         .amount-value {
@@ -188,10 +181,12 @@
 
         .footer-note {
             text-align: center;
-            margin-top: 8mm;
-            color: #6da6ad;
-            font-size: 10px;
+            margin-top: 5mm;
+            margin-bottom: 4mm;
+            color: black;
+            font-size: 12px;
             page-break-inside: avoid;
+            font-weight: 600;
         }
 
         .no-break {
@@ -231,6 +226,7 @@
             };
 
             $taxInput = $period_end ?? '';
+            $day = '';
             $month = '';
             $year = '';
             if (!empty($taxInput)) {
@@ -248,7 +244,7 @@
                         $month = substr($digits, 2, 2);
                         $year = substr($digits, -4);
                     } elseif (strlen($digits) >= 6) {
-                        $day = '01'; 
+                        $day = '01';
                         $month = substr($digits, 0, 2);
                         $year = substr($digits, -4);
                     }
@@ -290,35 +286,27 @@
             <div class="grid">
                 <div class="col col-left">
                     <div class="field">
-                        <span class="label">Contractor’s name</span>
+                        <span class="mb">Contractor’s name</span>
                         <div class="track-left">
-                            <div class="line-input">
-
-                                <div>{{ $forename ?? 'asdsa' }}</div>
-                                <div>{{ $surname ?? 'asdsa' }}</div>
-
-
-                            </div>
+                            <div class="line-input" style="margin-top: 15px;"></div>
+                            <div class="line-input"></div>
                         </div>
                     </div>
                     <div class="field">
-                        <span class="label">Contractor’s address</span>
+                        <span class="mb">Contractor’s address</span>
                         <div class="track-left">
-                            <div class="line-input multiline">
-
-                                <div class="address-input">
-                                    {{-- {{ $address ?? ' uahsuiha' }} --}}
-                                </div>
-                            </div>
+                                <div class="line-input" style="margin-top: 15px;"></div>
+                                <div class="line-input"></div>
+                                <div class="line-input"></div>
                         </div>
                     </div>
                 </div>
                 <div class="col col-right">
                     <div class="field">
                         <span class="label">Payment and deduction made in tax month ended</span>
-                        <div class="hint">{{ $day}} MM YYYY</div>
+                        <div class="label">{{ $day}} MM YYYY</div>
                         <div class="track-left">
-                            <div class="boxes">
+                            <div class="boxes" style="margin-top: 15px;">
                                 @foreach($pad($taxBoxes, 8) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
@@ -326,9 +314,9 @@
                         </div>
                     </div>
                     <div class="field" style="margin-top:5mm;">
-                        <span class="label">Employer’s Tax Reference</span>
+                        <span class="mb">Employer’s Tax Reference</span>
                         <div class="track-left">
-                            <div class="boxes">
+                            <div class="boxes" style="margin-top: 15px;">
                                 @foreach($pad(($emp_ref_left ?? ''), 3) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
@@ -348,15 +336,16 @@
             <div class="grid">
                 <div class="col col-left">
                     <div class="field">
-                        <span class="label">Subcontractor’s full name</span>
+                        <span class="mb">Subcontractor’s full name</span>
                         <div class="track-left">
-                            <div class="line-input">{{ $forename }} {{ $surname }}</div>
+                            <div class="line-input" style="margin-top: 15px;">{{" ". $title }} {{ $forename }}</div>
+                            <div class="line-input"> {{" ". $surname }}</div>
                         </div>
                     </div>
                     <div class="field">
-                        <span class="label">Unique Taxpayer reference (UTR)</span>
+                        <span class="mb">Unique Taxpayer reference (UTR)</span>
                         <div class="track-left">
-                            <div class="boxes">
+                            <div class="boxes" style="margin-top: 15px;">
                                 @foreach($pad($sub_contractor_utr ?? '', 10) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
@@ -364,9 +353,9 @@
                         </div>
                     </div>
                     <div class="field">
-                        <span class="label">Verification Number</span>
+                        <span class="mb">Verification Number*</span>
                         <div class="track-left">
-                            <div class="boxes">
+                            <div class="boxes" style="margin-top: 15px;">
                                 <span class="box">V</span>
                                 @foreach($pad($verification_no_left ?? '', 10) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
@@ -377,7 +366,9 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="hint">Verification number only to be entered where a deduction at the higher rate
+                        <br>
+                        <div class="hint" style="margin-top: 20px;">* Verification number only to be entered where a
+                            deduction at the higher rate
                             has been made.</div>
                     </div>
                 </div>
@@ -386,13 +377,13 @@
                         @php [$L, $R] = $moneyToBoxes($row['value'] ?? 0); @endphp
                         <div class="amount-row">
                             <div class="amount-label">
-                                {!! !empty($row['strong']) ? '<strong>' . $row['label'] . '</strong>' : e($row['label']) !!}
+                                {!! !empty($row['strong']) ? $row['label'] : e($row['label']) !!}
                             </div>
                             <div class="amount-value">
                                 <div class="boxes">
-                                    <span class="box box--currency">$</span>
+                                    <span class="box box--currency">£</span>
                                     @foreach($L as $c) <span class="box">{!! $chr($c) !!}</span> @endforeach
-                                    <span class="box-slash ">.</span>
+                                    <span class="box-slash " style="color:black !important; font-size: 12px; align-items: center;">.</span>
                                     @foreach($R as $c) <span class="box">{!! $chr($c) !!}</span> @endforeach
                                 </div>
                             </div>
@@ -404,9 +395,16 @@
 
         <div class="footer-note">Subcontractors - Please keep this document safe</div>
     </div>
-    <footer>
-        {{ $works_ref }}
+
+    <footer style="width: 100%; margin-top: 55px;">
+        <div style="display: table; width: 100%;">
+            <div style="display: table-row;">
+                <span style="display: table-cell; text-align: left;">{{ $works_ref }}</span>
+                <span style="display: table-cell; text-align: right;">HMRC 09/08</span>
+            </div>
+        </div>
     </footer>
+
 </body>
 
 </html>

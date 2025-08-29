@@ -67,7 +67,7 @@ class ExcelImportController extends Controller
             log::info('payload'.json_encode($payload));
             $pdf = PDF::loadView('CISStatement',  $payload);
             $pdfContent = $pdf->output();
-            $filename = 'CISStatement_' . ($payload['forename'].$payload['surname'] ?? 'Unknown') . '.pdf';
+            $filename = 'CISStatement_' . ($payload['forename'].$payload['surname'].time().$index ?? 'Unknown') . '.pdf';
             // return $pdf->download($filename);
             $zip->addFromString($filename, $pdfContent);
         }
