@@ -118,16 +118,16 @@
 
         .box {
             display: inline-block;
-            width: 5mm;
-            height: 6mm;
+            width: 4mm;
+            height: 5mm;
             border: 1px solid #92c8cf;
             text-align: center;
             vertical-align: middle;
-            line-height: 6mm;
+            line-height: 5mm;
             font-size: 12px;
-            font-weight: 800;
+            font-weight: 700;
             color: #333;
-            margin-right: 0.8mm;
+            margin-right: 0.3mm;
             box-sizing: border-box;
             overflow: hidden;
             text-overflow: clip;
@@ -141,15 +141,15 @@
         .box--currency {
             background: #157c96;
             color: #fff;
-            border-color: #157c96;
+            border-color: #92c8cf;
             font-weight: 700;
             font-size: 9px;
         }
 
 
         .box--currency {
-            background: #157c96;
-            color: #fff;
+            background: #fff;
+            color: #157c96;
             border-color: #157c96;
             font-weight: 700;
         }
@@ -158,6 +158,8 @@
             color: #92c8cf;
             font-weight: 700;
             margin: 0 1mm;
+            font-size: 18px;
+            justify-self: center;
         }
 
         .amount-row {
@@ -229,23 +231,32 @@
             };
 
             $taxInput = $period_end ?? '';
-            $day = '05';
             $month = '';
             $year = '';
             if (!empty($taxInput)) {
                 $ts = strtotime($taxInput);
+
                 if ($ts) {
+                    $day = date('d', $ts);
                     $month = date('m', $ts);
                     $year = date('Y', $ts);
                 } else {
                     $digits = preg_replace('/\D+/', '', $taxInput);
-                    if (strlen($digits) >= 6) {
+
+                    if (strlen($digits) >= 8) {
+                        $day = substr($digits, 0, 2);
+                        $month = substr($digits, 2, 2);
+                        $year = substr($digits, -4);
+                    } elseif (strlen($digits) >= 6) {
+                        $day = '01'; 
                         $month = substr($digits, 0, 2);
                         $year = substr($digits, -4);
-                        $month = str_pad((string) intval($month), 2, '0', STR_PAD_LEFT);
                     }
+
+                    $month = str_pad((string) intval($month), 2, '0', STR_PAD_LEFT);
                 }
             }
+
             $taxBoxes = $day . $month . $year;
 
 
@@ -267,7 +278,7 @@
             $empRef = $aoref ?? '';
 
             $emp_ref_left = substr($empRef, 0, 3);
-            $emp_ref_right = substr($empRef, 3);   
+            $emp_ref_right = substr($empRef, 3, 8);   
 
 
 
@@ -283,7 +294,8 @@
                         <div class="track-left">
                             <div class="line-input">
 
-                                {{-- {{ $forename }} --}}
+                                <div>{{ $forename ?? 'asdsa' }}</div>
+                                <div>{{ $surname ?? 'asdsa' }}</div>
 
 
                             </div>
@@ -304,7 +316,7 @@
                 <div class="col col-right">
                     <div class="field">
                         <span class="label">Payment and deduction made in tax month ended</span>
-                        <div class="hint">05 MM YYYY</div>
+                        <div class="hint">{{ $day}} MM YYYY</div>
                         <div class="track-left">
                             <div class="boxes">
                                 @foreach($pad($taxBoxes, 8) as $c)
@@ -393,8 +405,8 @@
         <div class="footer-note">Subcontractors - Please keep this document safe</div>
     </div>
     <footer>
-    {{ $works_ref }}
-</footer>
+        {{ $works_ref }}
+    </footer>
 </body>
 
 </html>
