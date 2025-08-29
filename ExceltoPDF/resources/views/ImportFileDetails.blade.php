@@ -1,4 +1,18 @@
-<table class="w-full border border-gray-300 rounded-lg shadow-md mt-6">
+<div>
+    <form action="{{ route('download.zip') }}" method="POST">
+        @csrf
+        <button class="px-4 py-1 text-white bg-yellow-600 rounded-md
+                    hover:bg-yellow-700 shadow-sm transition-all duration-200
+                    cursor-pointer hover:scale-105"
+                type="submit">
+                <input type="hidden" value="{{json_encode($rows[0]['data'])}}" name="row_data">
+                <input type="hidden" name="header_data" value="{{ json_encode($rows[0]['header']) }}">
+                Download as ZIP
+        </button>
+    </form>
+</div>
+
+<table class="w-full border table-auto border-gray-300 rounded-lg shadow-md mt-6">
     @foreach($rows[0]['data'] as $row)
         @foreach($row as $row_content)
             @if($loop->first)
@@ -23,13 +37,13 @@
                 <td class="px-4 py-2 border-b border-gray-200 text-center">
                     <form action="{{ route('download.pdf') }}" method="POST">
                         @csrf
-                       
-                            <input type="hidden" name="payload"
-       value='{{ json_encode(array_merge($row_content, $rows[0]['header'][0])) }}'>
+
+                        <input type="hidden" name="payload"
+                            value='{{ json_encode(array_merge($row_content, $rows[0]['header'][0])) }}'>
 
                         <button type="submit" class="px-4 py-1 text-white bg-blue-600 rounded-md
-                           hover:bg-blue-700 shadow-sm transition-all duration-200
-                           cursor-pointer hover:scale-105">
+                                   hover:bg-blue-700 shadow-sm transition-all duration-200
+                                   cursor-pointer hover:scale-105">
                             Download PDF
                         </button>
                     </form>

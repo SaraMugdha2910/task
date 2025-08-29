@@ -29,7 +29,7 @@
         </div>
       </form>
 
-      <div id="preview-table" class="mt-8"></div>
+      <div id="preview-table" class="mt-8 overflow-x-auto overflow-y-auto h-100"></div>
     </div>
 
     <script>

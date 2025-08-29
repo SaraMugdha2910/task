@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ExcelImport implements ToArray, WithHeadingRow
+class DataRowsImport implements ToArray, WithHeadingRow
 {
     /**
     * @param Collection $collection

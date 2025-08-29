@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>CIS Statement</title>
     <style>
-        @page { size: A4; margin: 28mm 18mm 20mm 18mm; }
-        html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        @page {
+            size: A4;
+            margin: 28mm 18mm 20mm 18mm;
+        }
+
+        html,
+        body {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
         body {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 11px;
             color: #0f3e46;
             line-height: 1.25;
         }
-        .sheet { width: 174mm;  }
-        .teal { color: #157c96; }
+
+        .sheet {
+            width: 174mm;
+        }
+
+        .teal {
+            color: #157c96;
+        }
+
         .header-title {
             font-size: 20px;
             font-weight: 700;
@@ -21,266 +38,363 @@
             color: #157c96;
             margin: 0 0 2mm 0;
         }
+
         .rule {
             height: 6px;
             background: #157c96;
             margin: 3mm 0 5mm 0;
         }
+
         .panel {
             border: 1px solid #92c8cf;
             padding: 5mm 5mm 4mm 5mm;
             margin-bottom: 6mm;
             page-break-inside: avoid;
         }
+
         .panel-title {
             font-weight: 700;
             color: #157c96;
             font-size: 14px;
             margin: 0 0 3mm 0;
         }
-        .grid { display: table; width: 100%; table-layout: fixed; }
-        .col { display: table-cell; vertical-align: top; }
-        .col-left { width: 58%; padding-right: 4mm; }
-        .col-right { width: 42%; padding-left: 4mm; }
-        .field { margin: 2.5mm 0; }
-        .label { display: block; color: #157c96; font-weight: 700; margin: 0 0 1mm 0; }
-        .hint { color: #6da6ad; font-size: 10px; margin-bottom: 1mm; }
-        
-        .track-left { display: inline-block; width: 95mm; }
-        .line-input { border: 1px solid #92c8cf; height: 8mm; }
-        .line-input.multiline { height: 18mm; }
+
+        .grid {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .col {
+            display: table-cell;
+            vertical-align: top;
+        }
+
+        .col-left {
+            width: 58%;
+            padding-right: 4mm;
+        }
+
+        .col-right {
+            width: 42%;
+            padding-left: 4mm;
+        }
+
+        .field {
+            margin: 2.5mm 0;
+        }
+
+        .label {
+            display: block;
+            color: #157c96;
+            font-weight: 700;
+            margin: 0 0 1mm 0;
+        }
+
+        .hint {
+            color: #6da6ad;
+            font-size: 10px;
+            margin-bottom: 1mm;
+        }
+
+        .track-left {
+            display: inline-block;
+            width: 95mm;
+        }
+
+        .line-input {
+            border: 1px solid #92c8cf;
+            height: 8mm;
+        }
+
+        .line-input.multiline {
+            height: 18mm;
+        }
+
         .boxes {
-    display: inline-block;   
-    white-space: nowrap;     
-}
- 
-.box {
-    display: inline-block;
-    width: 5mm;            
-    height: 6mm;              
-    border: 1px solid #92c8cf;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 6mm;         
-    font-size: 12px;
-    font-weight:800;           
-    color: #333;
-    margin-right: 0.8mm;      
-    box-sizing: border-box;   
-    overflow: hidden;        
-    text-overflow: clip;
-    white-space: nowrap;
-}
- 
-.box:last-child {
-    margin-right: 0;
-}
- 
-.box--currency {
-    background: #157c96;
-    color: #fff;
-    border-color: #157c96;
-    font-weight: 700;
-    font-size: 9px;   
-}
- 
- 
-        .box--currency { background: #157c96; color: #fff; border-color: #157c96; font-weight: 700; }
-        .box-slash { color: #92c8cf; font-weight: 700; margin: 0 1mm; }
-        .amount-row { margin: 3mm 0; }
-       
-        .amount-label { display: block; width: 100%; margin-bottom: 1.5mm; }
-        .amount-value { display: block; width: 100%; text-align: left; }
-        .amount-value .boxes { padding-left: 2mm; }
-        .muted { color: #6da6ad; }
-        .footer-note { text-align: center; margin-top: 8mm; color: #6da6ad; font-size: 10px; page-break-inside: avoid; }
-        
-        .no-break { page-break-inside: avoid; page-break-before: auto; page-break-after: auto; }
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .box {
+            display: inline-block;
+            width: 5mm;
+            height: 6mm;
+            border: 1px solid #92c8cf;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 6mm;
+            font-size: 12px;
+            font-weight: 800;
+            color: #333;
+            margin-right: 0.8mm;
+            box-sizing: border-box;
+            overflow: hidden;
+            text-overflow: clip;
+            white-space: nowrap;
+        }
+
+        .box:last-child {
+            margin-right: 0;
+        }
+
+        .box--currency {
+            background: #157c96;
+            color: #fff;
+            border-color: #157c96;
+            font-weight: 700;
+            font-size: 9px;
+        }
+
+
+        .box--currency {
+            background: #157c96;
+            color: #fff;
+            border-color: #157c96;
+            font-weight: 700;
+        }
+
+        .box-slash {
+            color: #92c8cf;
+            font-weight: 700;
+            margin: 0 1mm;
+        }
+
+        .amount-row {
+            margin: 3mm 0;
+        }
+
+        .amount-label {
+            display: block;
+            width: 100%;
+            margin-bottom: 1.5mm;
+        }
+
+        .amount-value {
+            display: block;
+            width: 100%;
+            text-align: left;
+        }
+
+        .amount-value .boxes {
+            padding-left: 2mm;
+        }
+
+        .muted {
+            color: #6da6ad;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 8mm;
+            color: #6da6ad;
+            font-size: 10px;
+            page-break-inside: avoid;
+        }
+
+        .no-break {
+            page-break-inside: avoid;
+            page-break-before: auto;
+            page-break-after: auto;
+        }
     </style>
 </head>
+
 <body>
-<div class="sheet no-break">
-    <div class="header-title">
-        Construction Industry Scheme<br>
-        Payment and deduction statement
-    </div>
-    <div class="rule"></div>
- 
-    @php
-        $pad = function ($value, $length) {
-            $s = (string)($value ?? '');
-            $s = preg_replace('/\s+/', '', $s);
-            return str_split(str_pad($s, $length, ' ', STR_PAD_RIGHT));
-        };
-        $moneyToBoxes = function ($value, $digits = 6) {
-            $num = number_format((float)($value ?? 0), 2, '.', '');
-            $num = str_replace(['£', ','], '', $num);
-            $parts = explode('.', $num);
-            $left = preg_replace('/\D/', '', $parts[0]);
-            $left = str_pad($left, $digits, ' ', STR_PAD_LEFT);
-            $right = str_pad($parts[1] ?? '00', 2, '0', STR_PAD_RIGHT);
-            return [str_split($left), str_split($right)];
-        };
-       
-        $chr = function ($c) {
-            return $c === ' ' || $c === '' ? '&nbsp;' : e($c);
-        };
-        
-        $taxInput = $period_end ?? '';
-        $day = '05';
-        $month = '';
-        $year = '';
-        if (!empty($taxInput)) {
-            $ts = strtotime($taxInput);
-            if ($ts) {
-                $month = date('m', $ts);
-                $year = date('Y', $ts);
-            } else {
-                $digits = preg_replace('/\D+/', '', $taxInput);
-                if (strlen($digits) >= 6) {
-                    $month = substr($digits, 0, 2);
-                    $year = substr($digits, -4);
-                    $month = str_pad((string)intval($month), 2, '0', STR_PAD_LEFT);
+    <div class="sheet no-break">
+        <div class="header-title">
+            Construction Industry Scheme<br>
+            Payment and deduction statement
+        </div>
+        <div class="rule"></div>
+
+        @php
+            $pad = function ($value, $length) {
+                $s = (string) ($value ?? '');
+                $s = preg_replace('/\s+/', '', $s);
+                return str_split(str_pad($s, $length, ' ', STR_PAD_RIGHT));
+            };
+            $moneyToBoxes = function ($value, $digits = 6) {
+                $num = number_format((float) ($value ?? 0), 2, '.', '');
+                $num = str_replace(['£', ','], '', $num);
+                $parts = explode('.', $num);
+                $left = preg_replace('/\D/', '', $parts[0]);
+                $left = str_pad($left, $digits, ' ', STR_PAD_LEFT);
+                $right = str_pad($parts[1] ?? '00', 2, '0', STR_PAD_RIGHT);
+                return [str_split($left), str_split($right)];
+            };
+
+            $chr = function ($c) {
+                return $c === ' ' || $c === '' ? '&nbsp;' : e($c);
+            };
+
+            $taxInput = $period_end ?? '';
+            $day = '05';
+            $month = '';
+            $year = '';
+            if (!empty($taxInput)) {
+                $ts = strtotime($taxInput);
+                if ($ts) {
+                    $month = date('m', $ts);
+                    $year = date('Y', $ts);
+                } else {
+                    $digits = preg_replace('/\D+/', '', $taxInput);
+                    if (strlen($digits) >= 6) {
+                        $month = substr($digits, 0, 2);
+                        $year = substr($digits, -4);
+                        $month = str_pad((string) intval($month), 2, '0', STR_PAD_LEFT);
+                    }
                 }
             }
-        }
-        $taxBoxes = $day . $month . $year; 
- 
-    
-        $amountRows = $amount_rows ?? [
-            ['label' => 'Gross amount paid (Excl VAT) (A)', 'value' => ($total_payments ?? 0)],
-            ['label' => 'Less cost of materials', 'value' => ($cost_of_materials ?? 0)],
-            ['label' => 'Amount liable to deduction', 'value' => ($liable_amount ?? 0)],
-            ['label' => 'Amount deducted (B)', 'value' => ($total_deducted ?? 0)],
-            ['label' => 'Amount payable (A - B)', 'value' => ($total_payments-$total_deducted ?? 0), 'strong' => true],
-        ];
+            $taxBoxes = $day . $month . $year;
 
 
-    $ver = $verification_number ?? '';
-    $ver = ltrim($ver, 'V');
-    [$verification_no_left, $verification_no_right] = array_pad(explode('/', $ver, 2), 2, '');
+            $amountRows = $amount_rows ?? [
+                ['label' => 'Gross amount paid (Excl VAT) (A)', 'value' => ($total_payments ?? 0)],
+                ['label' => 'Less cost of materials', 'value' => ($cost_of_materials ?? 0)],
+                ['label' => 'Amount liable to deduction', 'value' => ($liable_amount ?? 0)],
+                ['label' => 'Amount deducted (B)', 'value' => ($total_deducted ?? 0)],
+                ['label' => 'Amount payable (A - B)', 'value' => ($total_payments - $total_deducted ?? 0), 'strong' => true],
+            ];
 
 
-
-$empRef = $aoref ?? ''; 
-
-$emp_ref_left = substr($empRef, 0, 3); 
-$emp_ref_right = substr($empRef, 3);   
+            $ver = $verification_number ?? '';
+            $ver = ltrim($ver, 'V');
+            [$verification_no_left, $verification_no_right] = array_pad(explode('/', $ver, 2), 2, '');
 
 
 
+            $empRef = $aoref ?? '';
 
-    @endphp
- 
-    <div class="panel">
-        <div class="panel-title">Contractor details</div>
-        <div class="grid">
-            <div class="col col-left">
-                <div class="field">
-                    <span class="label">Contractor’s name</span>
-                    <div class="track-left"><div class="line-input">
-                   
-    {{ $forename }}
- 
- 
-                    </div></div>
-                </div>
-                <div class="field">
-                    <span class="label">Contractor’s address</span>
-                    <div class="track-left"><div class="line-input multiline">
-                       
-<div class="address-input">
-    {{ $address??' uahsuiha' }}
-</div>
-                    </div></div>
-                </div>
-            </div>
-            <div class="col col-right">
-                <div class="field">
-                    <span class="label">Payment and deduction made in tax month ended</span>
-                    <div class="hint">05 MM YYYY</div>
-                    <div class="track-left">
-                        <div class="boxes">
-                            @foreach($pad($taxBoxes, 8) as $c)
-                                <span class="box">{!! $chr($c) !!}</span>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                <div class="field" style="margin-top:5mm;">
-                    <span class="label">Employer’s Tax Reference</span>
-                    <div class="track-left">
-                        <div class="boxes">
-                            @foreach($pad(($emp_ref_left ?? ''), 3) as $c)
-                                <span class="box">{!! $chr($c) !!}</span>
-                            @endforeach
-                            <span class="box-slash">/</span>
-                            @foreach($pad(($emp_ref_right ?? ''), 8) as $c)
-                                <span class="box">{!! $chr($c) !!}</span>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
- 
-    <div class="panel">
-        <div class="panel-title">Subcontractor details</div>
-        <div class="grid">
-            <div class="col col-left">
-                <div class="field">
-                    <span class="label">Subcontractor’s full name</span>
-                    <div class="track-left"><div class="line-input">{{ $forename }}</div></div>
-                </div>
-                <div class="field">
-                    <span class="label">Unique Taxpayer reference (UTR)</span>
-                    <div class="track-left">
-                        <div class="boxes">
-                            @foreach($pad($sub_contractor_utr ?? '', 10) as $c)
-                                <span class="box">{!! $chr($c) !!}</span>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <span class="label">Verification Number</span>
-                    <div class="track-left">
-                        <div class="boxes">
-                            <span class="box">V</span>
-                            @foreach($pad($verification_no_left ?? '', 10) as $c)
-                                <span class="box">{!! $chr($c) !!}</span>
-                            @endforeach
-                            <span class="box-slash">/</span>
-                            @foreach($pad($verification_no_right ?? '', 2) as $c)
-                                <span class="box">{!! $chr($c) !!}</span>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="hint">Verification number only to be entered where a deduction at the higher rate has been made.</div>
-                </div>
-            </div>
-            <div class="col col-right">
-                @foreach($amountRows as $row)
-                    @php [$L, $R] = $moneyToBoxes($row['value'] ?? 0); @endphp
-                    <div class="amount-row">
-                        <div class="amount-label">{!! !empty($row['strong']) ? '<strong>'.$row['label'].'</strong>' : e($row['label']) !!}</div>
-                        <div class="amount-value">
-                            <div class="boxes">
-                                <span class="box box--currency">$</span>
-                                @foreach($L as $c) <span class="box">{!! $chr($c) !!}</span> @endforeach
-                                <span class="box-slash ">.</span>
-                                @foreach($R as $c) <span class="box">{!! $chr($c) !!}</span> @endforeach
+            $emp_ref_left = substr($empRef, 0, 3);
+            $emp_ref_right = substr($empRef, 3);   
+
+
+
+
+        @endphp
+
+        <div class="panel">
+            <div class="panel-title">Contractor details</div>
+            <div class="grid">
+                <div class="col col-left">
+                    <div class="field">
+                        <span class="label">Contractor’s name</span>
+                        <div class="track-left">
+                            <div class="line-input">
+
+                                {{-- {{ $forename }} --}}
+
+
                             </div>
                         </div>
                     </div>
-                @endforeach
+                    <div class="field">
+                        <span class="label">Contractor’s address</span>
+                        <div class="track-left">
+                            <div class="line-input multiline">
+
+                                <div class="address-input">
+                                    {{-- {{ $address ?? ' uahsuiha' }} --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-right">
+                    <div class="field">
+                        <span class="label">Payment and deduction made in tax month ended</span>
+                        <div class="hint">05 MM YYYY</div>
+                        <div class="track-left">
+                            <div class="boxes">
+                                @foreach($pad($taxBoxes, 8) as $c)
+                                    <span class="box">{!! $chr($c) !!}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field" style="margin-top:5mm;">
+                        <span class="label">Employer’s Tax Reference</span>
+                        <div class="track-left">
+                            <div class="boxes">
+                                @foreach($pad(($emp_ref_left ?? ''), 3) as $c)
+                                    <span class="box">{!! $chr($c) !!}</span>
+                                @endforeach
+                                <span class="box-slash">/</span>
+                                @foreach($pad(($emp_ref_right ?? ''), 8) as $c)
+                                    <span class="box">{!! $chr($c) !!}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="panel">
+            <div class="panel-title">Subcontractor details</div>
+            <div class="grid">
+                <div class="col col-left">
+                    <div class="field">
+                        <span class="label">Subcontractor’s full name</span>
+                        <div class="track-left">
+                            <div class="line-input">{{ $forename }} {{ $surname }}</div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <span class="label">Unique Taxpayer reference (UTR)</span>
+                        <div class="track-left">
+                            <div class="boxes">
+                                @foreach($pad($sub_contractor_utr ?? '', 10) as $c)
+                                    <span class="box">{!! $chr($c) !!}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <span class="label">Verification Number</span>
+                        <div class="track-left">
+                            <div class="boxes">
+                                <span class="box">V</span>
+                                @foreach($pad($verification_no_left ?? '', 10) as $c)
+                                    <span class="box">{!! $chr($c) !!}</span>
+                                @endforeach
+                                <span class="box-slash">/</span>
+                                @foreach($pad($verification_no_right ?? '', 2) as $c)
+                                    <span class="box">{!! $chr($c) !!}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="hint">Verification number only to be entered where a deduction at the higher rate
+                            has been made.</div>
+                    </div>
+                </div>
+                <div class="col col-right">
+                    @foreach($amountRows as $row)
+                        @php [$L, $R] = $moneyToBoxes($row['value'] ?? 0); @endphp
+                        <div class="amount-row">
+                            <div class="amount-label">
+                                {!! !empty($row['strong']) ? '<strong>' . $row['label'] . '</strong>' : e($row['label']) !!}
+                            </div>
+                            <div class="amount-value">
+                                <div class="boxes">
+                                    <span class="box box--currency">$</span>
+                                    @foreach($L as $c) <span class="box">{!! $chr($c) !!}</span> @endforeach
+                                    <span class="box-slash ">.</span>
+                                    @foreach($R as $c) <span class="box">{!! $chr($c) !!}</span> @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">Subcontractors - Please keep this document safe</div>
     </div>
- 
-    <div class="footer-note">Subcontractors - Please keep this document safe</div>
-</div>
+    <footer>
+    {{ $works_ref }}
+</footer>
 </body>
+
 </html>
- 
