@@ -46,7 +46,7 @@
 
         .panel {
             border: 1px solid #92c8cf;
-            padding: 5mm 5mm 4mm 8mm;
+            padding: 5mm 5mm 1mm 8mm;
             margin-bottom: 10mm;
             page-break-inside: avoid;
         }
@@ -86,9 +86,14 @@
         .label {
             display: block;
             color: black;
-            font-weight: 900;
-            font-size: 10px;
+            font-weight: 800;
+            font-size: 12px;
             margin: 0 0 1mm 0;
+        }
+
+        .sub-contractor-field{ margin:1.8mm 0 10mm 0;
+    
+           
         }
 
         .hint {
@@ -105,6 +110,7 @@
         .line-input {
             border: 1px solid #a8d7d7;
             height: 5mm;
+            padding-left: 0.4mm;
         }
 
         .line-input.multiline {
@@ -126,7 +132,7 @@
             line-height: 5mm;
             font-size: 12px;
             font-weight: 700;
-            color: #333;
+            color: #a8d7d7;
             margin-right: 0.3mm;
             box-sizing: border-box;
             overflow: hidden;
@@ -174,6 +180,9 @@
         .amount-value .boxes {
             padding-left: 2mm;
         }
+        .amount-value .boxes:first-child{
+            padding-left: 0mm;
+        }
 
         .muted {
             color: #6da6ad;
@@ -193,6 +202,9 @@
             page-break-inside: avoid;
             page-break-before: auto;
             page-break-after: auto;
+        }
+        .bt-0{
+            border-top:0px;
         }
     </style>
 </head>
@@ -289,15 +301,15 @@
                         <span class="mb">Contractor’s name</span>
                         <div class="track-left">
                             <div class="line-input" style="margin-top: 15px;"></div>
-                            <div class="line-input"></div>
+                            <div class="line-input bt0"></div>
                         </div>
                     </div>
                     <div class="field">
                         <span class="mb">Contractor’s address</span>
                         <div class="track-left">
-                                <div class="line-input" style="margin-top: 15px;"></div>
-                                <div class="line-input"></div>
-                                <div class="line-input"></div>
+                                <div class="line-input" style="margin-top: 15px;">ajgsdjahksjhdkajliwjdlkjalskjda</div>
+                                <div class="line-input bt-0"> jhagsdjhakjjsdkljalkwjkd</div>
+                                <div class="line-input bt-0">hyghjsabdkjhakjhsdkjjjaskjdh</div>
                         </div>
                     </div>
                 </div>
@@ -335,14 +347,14 @@
             <div class="panel-title">Subcontractor details</div>
             <div class="grid">
                 <div class="col col-left">
-                    <div class="field">
+                    <div class="sub-contractor-field">
                         <span class="mb">Subcontractor’s full name</span>
                         <div class="track-left">
-                            <div class="line-input" style="margin-top: 15px;">{{" ". $title }} {{ $forename }}</div>
-                            <div class="line-input"> {{" ". $surname }}</div>
+                            <div class="line-input " style="margin-top: 15px;">{{" ". $title }} {{ $forename }}</div>
+                            <div class="line-input bt0"> {{" ". $surname }}</div>
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="sub-contractor-field">
                         <span class="mb">Unique Taxpayer reference (UTR)</span>
                         <div class="track-left">
                             <div class="boxes" style="margin-top: 15px;">
@@ -352,7 +364,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="sub-contractor-field">
                         <span class="mb">Verification Number*</span>
                         <div class="track-left">
                             <div class="boxes" style="margin-top: 15px;">
@@ -367,7 +379,7 @@
                             </div>
                         </div>
                         <br>
-                        <div class="hint" style="margin-top: 20px;">* Verification number only to be entered where a
+                        <div class="hint" style="margin-top: 11px;">* Verification number only to be entered where a
                             deduction at the higher rate
                             has been made.</div>
                     </div>
