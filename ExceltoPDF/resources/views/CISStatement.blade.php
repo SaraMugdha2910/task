@@ -91,9 +91,10 @@
             margin: 0 0 1mm 0;
         }
 
-        .sub-contractor-field{ margin:1.8mm 0 10mm 0;
-    
-           
+        .sub-contractor-field {
+            margin: 1.8mm 0 10mm 0;
+
+
         }
 
         .hint {
@@ -180,7 +181,8 @@
         .amount-value .boxes {
             padding-left: 2mm;
         }
-        .amount-value .boxes:first-child{
+
+        .amount-value .boxes:first-child {
             padding-left: 0mm;
         }
 
@@ -203,8 +205,9 @@
             page-break-before: auto;
             page-break-after: auto;
         }
-        .bt-0{
-            border-top:0px;
+
+        .bt-0 {
+            border-top: 0px;
         }
     </style>
 </head>
@@ -269,21 +272,27 @@
 
 
             $amountRows = $amount_rows ?? [
-                ['label' => 'Gross amount paid (Excl VAT) (A)', 'value' => ($total_payments ?? 0)],
+                ['label' => 'Gross amount paid (Excl VAT) (A)', 'value' => ($total_payment ?? 0)],
                 ['label' => 'Less cost of materials', 'value' => ($cost_of_materials ?? 0)],
                 ['label' => 'Amount liable to deduction', 'value' => ($liable_amount ?? 0)],
                 ['label' => 'Amount deducted (B)', 'value' => ($total_deducted ?? 0)],
-                ['label' => 'Amount payable (A - B)', 'value' => ($total_payments - $total_deducted ?? 0), 'strong' => true],
+                ['label' => 'Amount payable (A - B)', 'value' => ($amount_payable ?? 0), 'strong' => true],
             ];
-
-
-            $ver = $verification_number ?? '';
+            $ver = $verification_number ?? '';      // e.g., "V1029384762A"
             $ver = ltrim($ver, 'V');
-            [$verification_no_left, $verification_no_right] = array_pad(explode('/', $ver, 2), 2, '');
+            $ver=ltrim($ver,'v')        ;        // remove the leading 'V', becomes "1029384762A"
+
+            // Separate left 10 digits and right remaining
+            $verification_no_left = substr($ver, 0, 10);   // "1029384762"
+            $verification_no_right = substr($ver, 10);      // "A"
+
+            // Ensure left is exactly 10 chars and right is exactly 2 chars
+            $verification_no_left = str_pad($verification_no_left, 10, ' ', STR_PAD_RIGHT);
+            $verification_no_right = str_pad($verification_no_right, 2, ' ', STR_PAD_RIGHT);
 
 
 
-            $empRef = $aoref ?? '';
+            $empRef = $employer_tax_reference ?? '';
 
             $emp_ref_left = substr($empRef, 0, 3);
             $emp_ref_right = substr($empRef, 3, 8);   
@@ -300,16 +309,16 @@
                     <div class="field">
                         <span class="mb">Contractor’s name</span>
                         <div class="track-left">
-                            <div class="line-input" style="margin-top: 15px;"></div>
-                            <div class="line-input bt0"></div>
+                            <div class="line-input" style="margin-top: 15px;">{{  $contractor_name}}</div>
+                            <div class="line-input bt-0"></div>
                         </div>
                     </div>
                     <div class="field">
                         <span class="mb">Contractor’s address</span>
                         <div class="track-left">
-                                <div class="line-input" style="margin-top: 15px;">ajgsdjahksjhdkajliwjdlkjalskjda</div>
-                                <div class="line-input bt-0"> jhagsdjhakjjsdkljalkwjkd</div>
-                                <div class="line-input bt-0">hyghjsabdkjhakjhsdkjjjaskjdh</div>
+                            <div class="line-input" style="margin-top: 15px;">{{ $address_line1 }}</div>
+                            <div class="line-input bt-0">{{$address_line2 }}</div>
+                            <div class="line-input bt-0">{{ $address_line3 }}</div>
                         </div>
                     </div>
                 </div>
@@ -332,7 +341,7 @@
                                 @foreach($pad(($emp_ref_left ?? ''), 3) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
-                                <span class="box-slash">/</span>
+                                <span class="box" style="border:0px;font-size:30px;font-weight:bold">/</span>
                                 @foreach($pad(($emp_ref_right ?? ''), 8) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
@@ -350,15 +359,15 @@
                     <div class="sub-contractor-field">
                         <span class="mb">Subcontractor’s full name</span>
                         <div class="track-left">
-                            <div class="line-input " style="margin-top: 15px;">{{" ". $title }} {{ $forename }}</div>
-                            <div class="line-input bt0"> {{" ". $surname }}</div>
+                            <div class="line-input " style="margin-top: 15px;"> {{ $forename }}</div>
+                            <div class="line-input bt-0"> {{" " . $surname }}</div>
                         </div>
                     </div>
                     <div class="sub-contractor-field">
                         <span class="mb">Unique Taxpayer reference (UTR)</span>
                         <div class="track-left">
                             <div class="boxes" style="margin-top: 15px;">
-                                @foreach($pad($sub_contractor_utr ?? '', 10) as $c)
+                                @foreach($pad($utr ?? '', 10) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
                             </div>
@@ -372,7 +381,7 @@
                                 @foreach($pad($verification_no_left ?? '', 10) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
-                                <span class="box-slash">/</span>
+                                <span class="box" style="border:0px;font-size:30px;font-weight:bold;"> /</span>
                                 @foreach($pad($verification_no_right ?? '', 2) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
@@ -395,7 +404,8 @@
                                 <div class="boxes">
                                     <span class="box box--currency">£</span>
                                     @foreach($L as $c) <span class="box">{!! $chr($c) !!}</span> @endforeach
-                                    <span class="box-slash " style="color:black !important; font-size: 12px; align-items: center;">.</span>
+                                    <span class="box "
+                                        style="border:0px;color:black !important; font-size: 19px;margin-top:-10px">.</span>
                                     @foreach($R as $c) <span class="box">{!! $chr($c) !!}</span> @endforeach
                                 </div>
                             </div>
@@ -411,7 +421,7 @@
     <footer style="width: 100%; margin-top: 55px;">
         <div style="display: table; width: 100%;">
             <div style="display: table-row;">
-                <span style="display: table-cell; text-align: left;">{{ $works_ref }}</span>
+                <span style="display: table-cell; text-align: left;">1827</span>
                 <span style="display: table-cell; text-align: right;">HMRC 09/08</span>
             </div>
         </div>

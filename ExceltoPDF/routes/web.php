@@ -18,3 +18,4 @@ Route::get('/pdf/download',
 );
 Route::post('/download-pdf', [ExcelImportController::class, 'download'])->name('download.pdf');
 Route::post('/zip/download', [ExcelImportController::class, 'zipDownload'])->name('download.zip');
+Route::get('/show', [ExcelImportController::class, 'show']);
