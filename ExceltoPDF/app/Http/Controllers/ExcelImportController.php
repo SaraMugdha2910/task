@@ -71,7 +71,7 @@ class ExcelImportController extends Controller
         $subcontractors = SubContractor::where('contractor_id', $contractor->contractor_id)
             ->paginate(10);
 
-
+        log::info($subcontractors);
         $html = view('ImportFileDetails', ['subcontractors' => $subcontractors])->render();
 
         return response()->json(['html' => $html]);
@@ -231,6 +231,22 @@ class ExcelImportController extends Controller
             'message' => 'Contractor added to PDF queue successfully.'
         ]);
     }
+
+
+    public function list(Request $request)
+{
+    $contractorId = $request->get('contractor_id');
+    log::info($contractorId);
+    $subcontractors = SubContractor::where('contractor_id', $contractorId)
+        ->paginate(10);
+
+    // Render partial
+    log::info($subcontractors);
+    $html = view('ImportFileDetails',['subcontractors'=>$subcontractors])->render();
+
+    return response()->json(['html' => $html]);
+}
+
 
  
 

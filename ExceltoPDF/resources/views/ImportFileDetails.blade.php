@@ -21,7 +21,7 @@
 </div>
 
 <!-- Data Table -->
-<div class="overflow-x-auto">
+<div class="overflow-x-auto" data-contractor-id="{{ $subcontractors[0]->contractor_id}}" id="subcontractor-table">
     <table class="w-full border border-gray-200 rounded-lg shadow-sm">
         <thead>
             <tr class="bg-gray-100 text-gray-700 text-sm">
@@ -54,6 +54,12 @@
             @endforeach
         </tbody>
     </table>
+ <div class="mt-4">
+    <ul class="pagination">
+        {{ $subcontractors->links() }}
+    </ul>
+</div>
+
 </div>
 
 <script>

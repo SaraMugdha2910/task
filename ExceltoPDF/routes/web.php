@@ -12,6 +12,7 @@ Route::get('/excel/upload', function(){
 });
 
 Route::post('file/import', [ExcelImportController::class, 'import'])->name('excel.import');
+Route::get('file/import', [ExcelImportController::class, 'list'])->name('excel.import');
 
 Route::get('/pdf/download',
     [ExcelImportController::class,'PdfDownload']
@@ -22,3 +23,4 @@ Route::get('/show', [ExcelImportController::class, 'show']);
 
 Route::post('/pdf/queue', [ExcelImportController::class, 'queuePdf'])
      ->name('pdf.queue');
+Route::get('/cis-subcontractors/list', [ExcelImportController::class, 'list'])->name('subcontractors.list');
