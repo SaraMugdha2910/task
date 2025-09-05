@@ -7,7 +7,7 @@
         <span>Generate PDF</span>
     </button>
 
-    <!-- Download All ZIP -->
+
     <form action="{{ route('download.zip') }}" method="POST" class="inline">
         @csrf
         <input type="hidden" name="subcontractor_ids" value="{{ $subcontractors->pluck('unique_id')->implode(',') }}">

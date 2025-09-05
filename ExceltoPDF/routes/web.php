@@ -22,5 +22,3 @@ Route::get('/show', [ExcelImportController::class, 'show']);
 
 Route::post('/pdf/queue', [ExcelImportController::class, 'queuePdf'])
      ->name('pdf.queue');
-Route::get('/subcontractors', [ExcelImportController::class, 'list'])
-    ->name('subcontractors.list');

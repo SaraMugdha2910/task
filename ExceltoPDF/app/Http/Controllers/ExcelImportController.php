@@ -19,24 +19,7 @@ use ZipArchive;
 
 class ExcelImportController extends Controller
 {
-    public function impor(Request $request)
-    {
-        $request->validate([
-            'import_file' => 'required|mimes:csv,xlsx,xls',
-        ]);
-        $file = $request->file('import_file');
-
-        $dataRows = Excel::toArray(new DataRowsImport, $file);
-        $headerRows = Excel::toArray(new HeaderRowsImport, $file);
-        $rows[] = [
-            'data' => $dataRows,
-            'header' => array_slice($headerRows[0], 0, 1)
-        ];
-        log::info(json_encode($rows));
-        $html = view('ImportFileDetails', ['rows' => $rows])->render();
-
-        return response()->json(['html' => $html]);
-    }
+    
     public function import(Request $request)
     {
         $request->validate([
@@ -249,17 +232,6 @@ class ExcelImportController extends Controller
         ]);
     }
 
-      public function list(Request $request)
-    {
-        $contractorId = $request->get('contractor_id');
-        $subcontractors = Subcontractor::where('contractor_id', $contractorId)
-            ->paginate(10);
-        log::info('ashduia');
-        $html = view('ImportFileDetails', ['subcontractors'=>$subcontractors])->render();
-
-        return response()->json([
-            'html' => $html,
-        ]);
-    }
+ 
 
 }
