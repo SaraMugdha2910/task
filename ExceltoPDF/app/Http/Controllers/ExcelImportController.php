@@ -6,6 +6,7 @@ use App\Imports\DataRowsImport;
 use App\Imports\HeaderRowsImport;
 use App\Imports\SubContractorImport;
 use App\Models\Contractor;
+use App\Models\PdfQueue;
 use App\Models\SubContractor;
 use Carbon\Carbon;
 use Carbon\Traits\Timestamp;
@@ -85,7 +86,7 @@ class ExcelImportController extends Controller
         Excel::import(new SubContractorImport($contractor->contractor_id, $chunk), $file);
 
         $subcontractors = SubContractor::where('contractor_id', $contractor->contractor_id)
-            ->get();
+            ->paginate(10);
 
 
         $html = view('ImportFileDetails', ['subcontractors' => $subcontractors])->render();
@@ -224,4 +225,41 @@ class ExcelImportController extends Controller
             'total_deducted' => 160.00,
         ]);
     }
+
+    public function queuePdf(Request $request)
+    {
+        // validate input
+        $request->validate([
+            'contractor_id' => 'required',
+        ]);
+
+        $contractorId = $request->input('contractor_id');
+
+       
+
+            PdfQueue::create([
+                'contractor_id' => $contractorId,
+                'processed'     => false,
+            ]);
+        
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Contractor added to PDF queue successfully.'
+        ]);
+    }
+
+      public function list(Request $request)
+    {
+        $contractorId = $request->get('contractor_id');
+        $subcontractors = Subcontractor::where('contractor_id', $contractorId)
+            ->paginate(10);
+        log::info('ashduia');
+        $html = view('ImportFileDetails', ['subcontractors'=>$subcontractors])->render();
+
+        return response()->json([
+            'html' => $html,
+        ]);
+    }
+
 }
