@@ -42,6 +42,7 @@ class SubContractorImport implements ToCollection, WithChunkReading, WithHeading
                 'total_payment'        => $row['total_payments'] ?? 0,
                 'cost_of_materials'    => $row['cost_of_materials'] ?? 0,
                 'total_deducted'       => $row['total_deducted'] ?? 0,
+                'people_id'            => $row['people_id'] ?? null,
                 'unique_id'            => $this->generateUniqueId(),
                 'created_at'           => now(),
                 'updated_at'           => now(),

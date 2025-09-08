@@ -139,9 +139,13 @@ class ExcelImportController extends Controller
 
         Log::info('Generating PDF', $rowArray);
 
+        $timestamp = strtotime($row->period_end);
+        $rowArray['period_month'] = date('m', $timestamp);
+        $rowArray['period_year']  = date('y', $timestamp);
+
         $pdf = PDF::loadView('CISStatement', $rowArray);
 
-        $filename = 'CISStatement_' . ($row->forename . '_' . $row->surname ?? 'Unknown') . '.pdf';
+        $filename = 'CIS-' . ($row->people_id . '--' . $rowArray['period_month'] . '-' . $rowArray['period_year'] ) . '.pdf';
 
         return $pdf->download($filename);
     }

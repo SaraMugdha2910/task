@@ -132,8 +132,7 @@
             vertical-align: middle;
             line-height: 5mm;
             font-size: 12px;
-            font-weight: 700;
-            color: #a8d7d7;
+            color: black;
             margin-right: 0.3mm;
             box-sizing: border-box;
             overflow: hidden;
@@ -153,7 +152,7 @@
         }
 
         .box-slash {
-            color: #a8d7d7;
+            color: #a8d7d7 !important;
             font-weight: 700;
             margin: 0 1mm;
             font-size: 20px;
@@ -341,7 +340,7 @@
                                 @foreach($pad(($emp_ref_left ?? ''), 3) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
-                                <span class="box" style="border:0px;font-size:30px;font-weight:bold">/</span>
+                                <span class="box" style="color: #a8d7d7 !important;border:0px;font-size:30px;font-weight:bold">/</span>
                                 @foreach($pad(($emp_ref_right ?? ''), 8) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
@@ -381,7 +380,7 @@
                                 @foreach($pad($verification_no_left ?? '', 10) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
-                                <span class="box" style="border:0px;font-size:30px;font-weight:bold;"> /</span>
+                                <span class="box" style="color: #a8d7d7 !important;border:0px;font-size:30px;font-weight:bold;"> /</span>
                                 @foreach($pad($verification_no_right ?? '', 2) as $c)
                                     <span class="box">{!! $chr($c) !!}</span>
                                 @endforeach
@@ -418,14 +417,14 @@
         <div class="footer-note">Subcontractors - Please keep this document safe</div>
     </div>
 
-    <footer style="width: 100%; margin-top: 55px;">
+    {{-- <footer style="width: 100%; margin-top: 55px;">
         <div style="display: table; width: 100%;">
             <div style="display: table-row;">
                 <span style="display: table-cell; text-align: left;">1827</span>
                 <span style="display: table-cell; text-align: right;">HMRC 09/08</span>
             </div>
         </div>
-    </footer>
+    </footer> --}}
 
 </body>
 
