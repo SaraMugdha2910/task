@@ -4,13 +4,19 @@ namespace App\Imports;
 
 use App\Models\SubContractor;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class SubContractorImport implements ToCollection, WithChunkReading
+class SubContractorImport implements ToCollection, WithChunkReading, WithHeadingRow
 {
     protected $contractorId;
     protected $chunk;
+
+    public function headingRow(): int{
+        return 4;
+    }
 
     public function __construct($contractorId, $chunk = 200)
     {
@@ -20,36 +26,29 @@ class SubContractorImport implements ToCollection, WithChunkReading
 
     public function collection(Collection $rows)
     {
-        if ($rows->count() < 5) return;
-
-        // 🔹 Row 4 = headers
-        $headers = array_map('strtolower', $rows[3]->toArray());
-
         $batch = [];
 
-        // 🔹 Rows after row 4 = data
-        foreach ($rows->skip(4) as $row) {
+        foreach ($rows as $row) {
             if ($row->filter()->isEmpty()) continue;
-
-            $data = array_combine($headers, $row->toArray());
+            // Log::info('row_content: ' . $row);
 
             $batch[] = [
                 'contractor_id'        => $this->contractorId,
-                'forename'             => $data['forename'] ?? null,
-                'surname'              => $data['surname'] ?? null,
-                'utr'                  => $data['sub-contractor utr'] ?? null,
-                'verification_number'  => $data['verification number'] ?? null,
-                'deduction_liability'  => $data['deduction liability'] ?? 0,
-                'total_payment'        => $data['total payments'] ?? 0,
-                'cost_of_materials'    => $data['cost of materials'] ?? 0,
-                'total_deducted'       => $data['total deducted'] ?? 0,
+                'forename'             => $row['forename'] ?? null,
+                'surname'              => $row['surname'] ?? null,
+                'utr'                  => $row['sub_contractor_utr'] ?? null,
+                'verification_number'  => $row['verification_number'] ?? null,
+                'deduction_liability'  => $row['deduction liability'] ?? 0,
+                'total_payment'        => $row['total_payments'] ?? 0,
+                'cost_of_materials'    => $row['cost_of_materials'] ?? 0,
+                'total_deducted'       => $row['total_deducted'] ?? 0,
                 'unique_id'            => $this->generateUniqueId(),
                 'created_at'           => now(),
                 'updated_at'           => now(),
             ];
         }
 
-        // 🔹 Insert in chunks
+        // Insert in chunks
         foreach (array_chunk($batch, $this->chunk) as $chunk) {
             SubContractor::insert($chunk);
         }

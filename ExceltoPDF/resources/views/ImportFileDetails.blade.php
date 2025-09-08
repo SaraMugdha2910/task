@@ -7,17 +7,17 @@
         <span>Generate PDF</span>
     </button>
 
-
-    <form action="{{ route('download.zip') }}" method="POST" class="inline">
+    {{-- <form action="{{ route('download.zip') }}" method="POST" class="inline">
         @csrf
         <input type="hidden" name="subcontractor_ids" value="{{ $subcontractors->pluck('unique_id')->implode(',') }}">
+
         <button type="submit"
                 class="flex items-center space-x-2 px-3 py-2 bg-yellow-600 text-white rounded-md shadow-sm hover:bg-yellow-700 transition-all duration-200"
                 title="Download All as ZIP">
             <i data-feather="archive" class="w-4 h-4"></i>
             <span>Download ZIP</span>
         </button>
-    </form>
+    </form> --}}
 </div>
 
 <!-- Data Table -->

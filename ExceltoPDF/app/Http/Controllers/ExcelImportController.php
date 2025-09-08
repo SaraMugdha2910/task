@@ -32,9 +32,9 @@ class ExcelImportController extends Controller
         if ($size <= 500_000) { // small file ~500KB
             $chunk = 300;
         } elseif ($size <= 5_000_000) { // ~5MB
-            $chunk = 700;
+            $chunk = 4000;
         } else {
-            $chunk = 2000;
+            $chunk = 4000;
         }
 
 
@@ -53,7 +53,7 @@ class ExcelImportController extends Controller
 
         // 🔹 Combine headers + values
         $contractorRow = array_combine($contractorHeaders, $contractorData);
-
+       log::info('contractor row' . json_encode($contractorRow));
         // ✅ Save contractor
         $contractor = Contractor::create([
             'contractor_name' => $contractorRow['contractor name'] ?? null,
@@ -80,6 +80,12 @@ class ExcelImportController extends Controller
     {
         if (!$date) {
             return null;
+        }
+        
+        // date input as timestamp
+        if (is_numeric($date)) {
+            $carbonDate = Carbon::createFromFormat('Y-m-d', '1899-12-30')->addDays($date);
+            return $carbonDate->format('Y-m-d');
         }
 
         try {
@@ -142,8 +148,12 @@ class ExcelImportController extends Controller
 
     public function zipDownload(Request $request)
     {
+        Log::info("request". $request);
+        dd($request);
         $row_data = json_decode($request->row_data);
         $header_data = json_decode($request->header_data);
+        Log::info('row_data'. $row_data);
+        Log::info('header_data' . $header_data);
 
         $zipFileName = 'CISStatement_' . time() . '.zip';
         $zipPath = storage_path('app/' . $zipFileName);
