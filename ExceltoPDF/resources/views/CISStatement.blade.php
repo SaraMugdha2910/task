@@ -24,15 +24,14 @@
         }
 
         .mb {
-            margin-bottom: 25px
-        }
-
-        .teal {
-            color: #009290;
+            margin-bottom: 25px;
+            color: black !important;
+            font-size: 12px;
         }
 
         .header-title {
-            font-size: 18px;
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 20px;
             font-weight: 700;
             color: #009290;
         }
@@ -41,7 +40,7 @@
             height: 10px;
             background: #009290;
             margin: 3mm 0 7mm 0;
-            margin-bottom: 7mm;
+            margin-bottom: 14mm;
         }
 
         .panel {
@@ -53,8 +52,8 @@
 
         .panel-title {
             font-weight: 700;
-            color: #157c96;
-            font-size: 14px;
+            color: #009290;
+            font-size: 16px;
         }
 
         .grid {
@@ -69,37 +68,36 @@
         }
 
         .col-left {
-            width: 55%;
+            width: 51.5%;
             padding-right: 4mm;
         }
 
         .col-right {
-            width: 45%;
+            width: 48.5%;
             padding-left: 4mm;
         }
 
         .field {
             margin: 2.5mm 0;
             margin-bottom: 15mm;
+            font-size: 12px;
         }
 
         .label {
             display: block;
             color: black;
-            font-weight: 800;
             font-size: 12px;
+            font-weight: 800;
             margin: 0 0 1mm 0;
         }
 
         .sub-contractor-field {
             margin: 1.8mm 0 10mm 0;
-
-
         }
 
         .hint {
-            /* color: #6da6ad; */
-            font-size: 10px;
+            color: black;
+            font-size: 11px;
             margin-bottom: 1mm;
         }
 
@@ -109,8 +107,9 @@
         }
 
         .line-input {
-            border: 1px solid #a8d7d7;
-            height: 5mm;
+            border: 0.8px solid #84c7c8;
+            color: black !important;
+            height: 6mm;
             padding-left: 0.4mm;
         }
 
@@ -126,14 +125,14 @@
         .box {
             display: inline-block;
             width: 4mm;
-            height: 5mm;
-            border: 1px solid #a8d7d7;
+            height: 6mm;
+            border: 0.8px solid #84c7c8;
             text-align: center;
             vertical-align: middle;
             line-height: 5mm;
             font-size: 12px;
             color: black;
-            margin-right: 0.3mm;
+            margin-right: 0.01mm;
             box-sizing: border-box;
             overflow: hidden;
             text-overflow: clip;
@@ -146,18 +145,9 @@
 
         .box--currency {
             background: #fff;
-            color: #a8d7d7;
-            border-color: 1px solid #a8d7d7;
+            color: #84c7c8;
+            border-color: 1px solid #84c7c8;
             font-weight: 700;
-        }
-
-        .box-slash {
-            color: #a8d7d7 !important;
-            font-weight: 700;
-            margin: 0 1mm;
-            font-size: 20px;
-            justify-self: center;
-            align-items: center;
         }
 
         .amount-row {
@@ -167,8 +157,10 @@
 
         .amount-label {
             display: block;
+            color: black !important;
             width: 100%;
             margin-bottom: 2.5mm;
+            font-size: 12px;
         }
 
         .amount-value {
@@ -185,14 +177,10 @@
             padding-left: 0mm;
         }
 
-        .muted {
-            color: #6da6ad;
-        }
-
         .footer-note {
             text-align: center;
-            margin-top: 5mm;
-            margin-bottom: 4mm;
+            margin-top: 3mm;
+            /* margin-bottom: 4mm; */
             color: black;
             font-size: 12px;
             page-break-inside: avoid;
@@ -212,7 +200,7 @@
 </head>
 
 <body>
-    <div class="sheet no-break">
+    <div class="no-break">
         <div class="header-title">
             Construction Industry Scheme<br>
             Payment and deduction statement
@@ -247,7 +235,7 @@
                 $ts = strtotime($taxInput);
 
                 if ($ts) {
-                    $day = date('d', $ts);
+                    $day = '05';
                     $month = date('m', $ts);
                     $year = date('Y', $ts);
                 } else {
@@ -267,13 +255,13 @@
                 }
             }
 
-            $taxBoxes = $day . $month . $year;
+            $taxBoxes = '05' . $month . $year;
 
 
             $amountRows = $amount_rows ?? [
                 ['label' => 'Gross amount paid (Excl VAT) (A)', 'value' => ($total_payment ?? 0)],
                 ['label' => 'Less cost of materials', 'value' => ($cost_of_materials ?? 0)],
-                ['label' => 'Amount liable to deduction', 'value' => ($liable_amount ?? 0)],
+                ['label' => 'Amount liable to deduction', 'value' => ($deduction_liability ?? 0)],
                 ['label' => 'Amount deducted (B)', 'value' => ($total_deducted ?? 0)],
                 ['label' => 'Amount payable (A - B)', 'value' => ($amount_payable ?? 0), 'strong' => true],
             ];
@@ -296,9 +284,6 @@
             $emp_ref_left = substr($empRef, 0, 3);
             $emp_ref_right = substr($empRef, 3, 8);   
 
-
-
-
         @endphp
 
         <div class="panel">
@@ -308,28 +293,40 @@
                     <div class="field">
                         <span class="mb">Contractor’s name</span>
                         <div class="track-left">
-                            <div class="line-input" style="margin-top: 15px;">{{  $contractor_name}}</div>
-                            <div class="line-input bt-0"></div>
+                            <div class="line-input" style="margin-top: 15px;">{{  $contractor_forename}}</div>
+                            <div class="line-input bt-0">{{ $contractor_surname }}</div>
                         </div>
                     </div>
                     <div class="field">
-                        <span class="mb">Contractor’s address</span>
+                        <span class="mb" >Contractor’s address</span>
                         <div class="track-left">
                             <div class="line-input" style="margin-top: 15px;">{{ $address_line1 }}</div>
                             <div class="line-input bt-0">{{$address_line2 }}</div>
-                            <div class="line-input bt-0">{{ $address_line3 }}</div>
+                            <div class="line-input bt-0">{{ $pincode }}</div>
                         </div>
                     </div>
                 </div>
                 <div class="col col-right">
                     <div class="field">
-                        <span class="label">Payment and deduction made in tax month ended</span>
-                        <div class="label">{{ $day}} MM YYYY</div>
+                        <span class="label" style="font-weight: bolder;">Payment and deduction made in tax month ended</span>
+                        <div class="label" style="font-style: italic; font-weight: bolder;">05 MM YYYY</div>
                         <div class="track-left">
-                            <div class="boxes" style="margin-top: 15px;">
-                                @foreach($pad($taxBoxes, 8) as $c)
-                                    <span class="box">{!! $chr($c) !!}</span>
-                                @endforeach
+                            <div class="boxes" style="margin-top: 15px; display: flex; gap: 2px;">
+                                <span class="group">
+                                    @foreach($pad($day, 2) as $c)
+                                        <span class="box">{!! $chr($c) !!}</span>
+                                    @endforeach
+                                </span>
+                                <span class="group" style="margin-left: 6px;">
+                                    @foreach($pad($month, 2) as $c)
+                                        <span class="box">{!! $chr($c) !!}</span>
+                                    @endforeach
+                                </span>
+                                <span class="group" style="margin-left: 6px;">
+                                    @foreach($pad($year, 4) as $c)
+                                        <span class="box">{!! $chr($c) !!}</span>
+                                    @endforeach
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -352,9 +349,9 @@
         </div>
 
         <div class="panel">
-            <div class="panel-title">Subcontractor details</div>
-            <div class="grid">
+            <div class="grid" style="margin-bottom: 0.8mm;">
                 <div class="col col-left">
+            <div class="panel-title">Subcontractor details</div>
                     <div class="sub-contractor-field">
                         <span class="mb">Subcontractor’s full name</span>
                         <div class="track-left">
@@ -366,9 +363,16 @@
                         <span class="mb">Unique Taxpayer reference (UTR)</span>
                         <div class="track-left">
                             <div class="boxes" style="margin-top: 15px;">
-                                @foreach($pad($utr ?? '', 10) as $c)
-                                    <span class="box">{!! $chr($c) !!}</span>
-                                @endforeach
+                                <span>
+                                    @foreach($pad(substr($utr ?? '', 0 ,5), 5) as $c)
+                                        <span class="box">{!! $chr($c) !!}</span>
+                                    @endforeach
+                                </span>
+                                <span style="margin-left: 6px;">
+                                    @foreach($pad(substr($utr ?? '', -5), 5) as $c)
+                                        <span class="box">{!! $chr($c) !!}</span>
+                                    @endforeach
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -395,7 +399,7 @@
                 <div class="col col-right">
                     @foreach($amountRows as $row)
                         @php [$L, $R] = $moneyToBoxes($row['value'] ?? 0); @endphp
-                        <div class="amount-row">
+                        <div class="amount-row" style="margin-bottom: 9mm; ">
                             <div class="amount-label">
                                 {!! !empty($row['strong']) ? $row['label'] : e($row['label']) !!}
                             </div>

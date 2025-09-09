@@ -55,20 +55,21 @@ class ExcelImportController extends Controller
         $contractorRow = array_combine($contractorHeaders, $contractorData);
        log::info('contractor row' . json_encode($contractorRow));
         // ✅ Save contractor
-        $contractor = Contractor::create([
-            'contractor_name' => $contractorRow['contractor name'] ?? null,
+        $contractor = Contractor::insertGetId([
+            'contractor_forename' => $contractorRow['contractor forename'] ?? null,
+            'contractor_surname' => $contractorRow['contractor surname'] ?? null,
             'employer_tax_reference' => $contractorRow['Contractor UTR'] ?? null,
             'address_line1' => $contractorRow['Address line 1'] ?? null,
             'address_line2' => $contractorRow['Address line 2'] ?? null,
-            'address_line3' => $contractorRow['Address line 3'] ?? null,
+            'pincode' => $contractorRow['Pincode'] ?? null,
             'period_end' => $this->formatDate($contractorRow['Period End'] ?? null),
             'email' => $contractorRow['Email Address'] ?? null,
         ]);
 
         // ✅ SubContractors start at row 4
-        Excel::import(new SubContractorImport($contractor->contractor_id, $chunk), $file);
+        Excel::import(new SubContractorImport($contractor, $chunk), $file);
 
-        $subcontractors = SubContractor::where('contractor_id', $contractor->contractor_id)
+        $subcontractors = SubContractor::where('contractor_id', $contractor)
             ->paginate(10);
 
         log::info($subcontractors);
@@ -115,11 +116,12 @@ class ExcelImportController extends Controller
         // Fetch Subcontractor with Contractor info
         $row = SubContractor::select(
             'sub_contractors.*',
-            'contractors.contractor_name',
+            'contractors.contractor_forename',
+            'contractors.contractor_surname',
             'contractors.employer_tax_reference',
             'contractors.address_line1',
             'contractors.address_line2',
-            'contractors.address_line3',
+            'contractors.pincode',
             'contractors.period_end'
         )
             ->join('contractors', 'contractors.contractor_id', '=', 'sub_contractors.contractor_id')
