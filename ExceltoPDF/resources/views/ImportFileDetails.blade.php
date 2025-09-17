@@ -1,13 +1,13 @@
 <div class="mb-6 flex items-center space-x-4">
     <!-- Generate PDF (Scheduler trigger) -->
-    <button class="generate-pdf-btn flex items-center space-x-2 px-3 py-2 bg-green-600 text-white rounded-md shadow-sm hover:bg-green-700 transition-all duration-200"
+    <!-- <button class="generate-pdf-btn flex items-center space-x-2 px-3 py-2 bg-green-600 text-white rounded-md shadow-sm hover:bg-green-700 transition-all duration-200"
             data-id="{{ $subcontractors[0]->contractor_id }}"
             title="Generate PDF for Contractor">
         <i data-feather="file-text" class="w-4 h-4"></i>
         <span>Generate PDF</span>
-    </button>
+    </button> -->
 
-    {{-- <form action="{{ route('download.zip') }}" method="POST" class="inline">
+     <form action="{{ route('download.zip') }}" method="POST" class="inline">
         @csrf
         <input type="hidden" name="subcontractor_ids" value="{{ $subcontractors->pluck('unique_id')->implode(',') }}">
 
@@ -17,7 +17,7 @@
             <i data-feather="archive" class="w-4 h-4"></i>
             <span>Download ZIP</span>
         </button>
-    </form> --}}
+    </form>
 </div>
 
 <!-- Data Table -->
@@ -67,22 +67,22 @@
     feather.replace();
 
     // Generate PDF button handler
-    document.querySelectorAll('.generate-pdf-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const contractorId = Number(this.dataset.id);
-            fetch("{{ route('pdf.queue') }}", {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ contractor_id: contractorId })
-            })
-            .then(res => res.json())
-            .then(data => {
-                alert(data.message);
-            })
-            .catch(err => console.error(err));
-        });
-    });
+    // document.querySelectorAll('.generate-pdf-btn').forEach(btn => {
+    //     btn.addEventListener('click', function() {
+    //         const contractorId = Number(this.dataset.id);
+    //         fetch("{{ route('pdf.queue') }}", {
+    //             method: 'POST',
+    //             headers: {
+    //                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({ contractor_id: contractorId })
+    //         })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             alert(data.message);
+    //         })
+    //         .catch(err => console.error(err));
+    //     });
+    // });
 </script>

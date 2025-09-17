@@ -61,7 +61,7 @@ class ExcelImportController extends Controller
             'employer_tax_reference' => $contractorRow['Contractor UTR'] ?? null,
             'address_line1' => $contractorRow['Address line 1'] ?? null,
             'address_line2' => $contractorRow['Address line 2'] ?? null,
-            'pincode' => $contractorRow['Pincode'] ?? null,
+            'pincode' => $contractorRow['Address line 3'] ?? null,
             'period_end' => $this->formatDate($contractorRow['Period End'] ?? null),
             'email' => $contractorRow['Email Address'] ?? null,
         ]);
@@ -142,7 +142,9 @@ class ExcelImportController extends Controller
         Log::info('Generating PDF', $rowArray);
 
         $timestamp = strtotime($row->period_end);
-        $rowArray['period_month'] = date('m', $timestamp);
+        $rowArray['period_end'] = $row->period_end;
+        $rowArray['period_month'] = 5; //Tax month is 5. Shoudn't use Calandar month
+        // $rowArray['period_month'] = date('m', $timestamp);
         $rowArray['period_year']  = date('y', $timestamp);
 
         $pdf = PDF::loadView('CISStatement', $rowArray);
@@ -150,16 +152,12 @@ class ExcelImportController extends Controller
         $filename = 'CIS-' . ($row->people_id . '--' . $rowArray['period_month'] . '-' . $rowArray['period_year'] ) . '.pdf';
 
         return $pdf->download($filename);
+
+       //return view('CISStatement', $rowArray);
     }
 
-    public function zipDownload(Request $request)
+    public function zipDownload()
     {
-        Log::info("request". $request);
-        dd($request);
-        $row_data = json_decode($request->row_data);
-        $header_data = json_decode($request->header_data);
-        Log::info('row_data'. $row_data);
-        Log::info('header_data' . $header_data);
 
         $zipFileName = 'CISStatement_' . time() . '.zip';
         $zipPath = storage_path('app/' . $zipFileName);
@@ -167,19 +165,44 @@ class ExcelImportController extends Controller
         if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRUE) {
             abort(500, 'Could not create ZIP file.');
         }
-        foreach ($row_data[0] as $index => $data) {
-            $payload = array_merge((array) $data, (array) $header_data[0]);
-            log::info('index: ' . $index);
-            log::info('payload' . json_encode($payload));
-            $pdf = PDF::loadView('CISStatement', $payload);
-            $pdfContent = $pdf->output();
-            $filename = 'CISStatement_' . ($payload['forename'] . $payload['surname'] . time() . $index ?? 'Unknown') . '.pdf';
-            // return $pdf->download($filename);
-            $zip->addFromString($filename, $pdfContent);
-        }
-        $zip->close();
 
-        return response()->download($zipPath)->deleteFileAfterSend(true);
+         $rows = SubContractor::select(
+            'sub_contractors.*',
+            'contractors.contractor_forename',
+            'contractors.contractor_surname',
+            'contractors.employer_tax_reference',
+            'contractors.address_line1',
+            'contractors.address_line2',
+            'contractors.pincode',
+            'contractors.period_end'
+        )
+            ->join('contractors', 'contractors.contractor_id', '=', 'sub_contractors.contractor_id')
+            ->get();
+
+        foreach ($rows as $row) {
+        // Prepare data for the PDF
+        $rowArray = $row->toArray();
+        $rowArray['period_end'] = $row->period_end ? date('d/m/Y', strtotime($row->period_end)) : null;
+        $rowArray['created_at'] = $row->created_at ? date('d/m/Y', strtotime($row->created_at)) : null;
+        $rowArray['updated_at'] = $row->updated_at ? date('d/m/Y', strtotime($row->updated_at)) : null;
+
+        $timestamp = strtotime($row->period_end);
+        $rowArray['period_month'] = 5; // Or use your logic
+        $rowArray['period_year']  = date('y', $timestamp);
+
+        // Generate PDF
+        $pdf = PDF::loadView('CISStatement', $rowArray);
+        $pdfContent = $pdf->output();
+
+        // Unique filename for each PDF
+        $filename = 'CIS-' . ($row->people_id . '--' . $rowArray['period_month'] . '-' . $rowArray['period_year'] ) . '.pdf';
+
+        $zip->addFromString($filename, $pdfContent);
+    }
+    $zip->close();
+
+    return response()->download($zipPath)->deleteFileAfterSend(true);
+
     }
 
 

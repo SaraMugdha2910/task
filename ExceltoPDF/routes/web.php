@@ -4,7 +4,7 @@ use App\Http\Controllers\ExcelImportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+   return redirect('/excel/upload');
 });
 
 Route::get('/excel/upload', function(){
