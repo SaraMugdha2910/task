@@ -38,7 +38,7 @@ class SubContractorImport implements ToCollection, WithChunkReading, WithHeading
                 'surname'              => $row['surname'] ?? null,
                 'utr'                  => $row['sub_contractor_utr'] ?? null,
                 'verification_number'  => $row['verification_number'] ?? null,
-                'deduction_liability'  => $row['deduction_liability'] ?? 0,
+                'deduction_liability'  => round($row['deduction_liability']) ?? 0,
                 'total_payment'        => round($row['total_payments']) ?? 0,
                 'cost_of_materials'    => round($row['cost_of_materials']) ?? 0,
                 'total_deducted'       => $row['total_deducted'] ?? 0,

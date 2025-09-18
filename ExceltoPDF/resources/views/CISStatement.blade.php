@@ -145,7 +145,7 @@
 
         .box--currency {
             background: #fff;
-            /* color: #84c7c8; */
+            color: #84c7c8;
             color: black;
             border-color: 1px solid #84c7c8;
             font-weight: 700;
@@ -421,14 +421,14 @@
         <div class="footer-note">Subcontractors - Please keep this document safe</div>
     </div>
 
-    <footer style="width: 100%; margin-top: 10px;">
+    <!-- <footer style="width: 100%; margin-top: 10px;">
         <div style="display: table; width: 100%;">
             <div style="display: table-row;">
                 <span style="display: table-cell; text-align: left;">CISOL1_v0_06</span>
                 <span style="display: table-cell; text-align: right;">HMRC 09/08</span>
             </div>
         </div>
-    </footer>
+    </footer> -->
 
 </body>
 
