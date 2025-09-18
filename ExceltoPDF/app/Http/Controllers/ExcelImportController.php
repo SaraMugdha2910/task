@@ -135,7 +135,7 @@ class ExcelImportController extends Controller
 
         // Format all date fields to d/m/Y for Blade view
         $rowArray = $row->toArray();
-        $rowArray['period_end'] = $row->period_end ? date('d/m/Y', strtotime($row->period_end)) : null;
+       // $rowArray['period_end'] = $row->period_end ? date('d/m/Y', strtotime($row->period_end)) : null;
         $rowArray['created_at'] = $row->created_at ? date('d/m/Y', strtotime($row->created_at)) : null;
         $rowArray['updated_at'] = $row->updated_at ? date('d/m/Y', strtotime($row->updated_at)) : null;
 
@@ -143,13 +143,13 @@ class ExcelImportController extends Controller
 
         $timestamp = strtotime($row->period_end);
         $rowArray['period_end'] = $row->period_end;
-        $rowArray['period_month'] = 5; //Tax month is 5. Shoudn't use Calandar month
-        // $rowArray['period_month'] = date('m', $timestamp);
+        $period_month = 5; //Tax month is 5. Shoudn't use Calendar month
+        $rowArray['period_month'] = date('m', $timestamp);
         $rowArray['period_year']  = date('y', $timestamp);
 
         $pdf = PDF::loadView('CISStatement', $rowArray);
 
-        $filename = 'CIS-' . ($row->people_id . '--' . $rowArray['period_month'] . '-' . $rowArray['period_year'] ) . '.pdf';
+        $filename = 'CIS-' . ($row->people_id . '--' . $period_month . '-' . $rowArray['period_year'] ) . '.pdf';
 
         return $pdf->download($filename);
 
@@ -182,12 +182,14 @@ class ExcelImportController extends Controller
         foreach ($rows as $row) {
         // Prepare data for the PDF
         $rowArray = $row->toArray();
-        $rowArray['period_end'] = $row->period_end ? date('d/m/Y', strtotime($row->period_end)) : null;
+        //$rowArray['period_end'] = $row->period_end ? date('d/m/Y', strtotime($row->period_end)) : null;
         $rowArray['created_at'] = $row->created_at ? date('d/m/Y', strtotime($row->created_at)) : null;
         $rowArray['updated_at'] = $row->updated_at ? date('d/m/Y', strtotime($row->updated_at)) : null;
 
         $timestamp = strtotime($row->period_end);
-        $rowArray['period_month'] = 5; // Or use your logic
+        $rowArray['period_end'] = $row->period_end;
+        $period_month = 5; //Tax month is 5. Shoudn't use Calendar month
+        $rowArray['period_month'] = date('m', $timestamp);
         $rowArray['period_year']  = date('y', $timestamp);
 
         // Generate PDF
@@ -195,7 +197,7 @@ class ExcelImportController extends Controller
         $pdfContent = $pdf->output();
 
         // Unique filename for each PDF
-        $filename = 'CIS-' . ($row->people_id . '--' . $rowArray['period_month'] . '-' . $rowArray['period_year'] ) . '.pdf';
+        $filename = 'CIS-' . ($row->people_id . '--' . $period_month . '-' . $rowArray['period_year'] ) . '.pdf';
 
         $zip->addFromString($filename, $pdfContent);
     }
